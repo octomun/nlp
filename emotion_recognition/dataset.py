@@ -88,6 +88,7 @@ class data_loader(Dataset):
         
         """ padding token으로 패딩하기 """
         max_length = max([len(x) for x in trunc_batch_token_ids])
+        # max_length = self.tokenizer.model_max_length
         padding_tokens, padding_attention_masks = [], []
         for batch_token_id, batch_attention_mask in zip(trunc_batch_token_ids, trunc_batch_attention_masks):
             padding_tokens.append(batch_token_id + [self.tokenizer.pad_token_id for _ in range(max_length-len(batch_token_id))])
@@ -117,9 +118,9 @@ class data_loader(Dataset):
             PM_input = []
             for i, line in enumerate(session):
                 speaker, utt, emotion = line
-                # input_str += " " + utt + self.tokenizer.sep_token
-                input_str += '<s' + str(speaker+1) + '> ' # s1, s2, s3...
-                input_str += utt + " "
+                input_str += " " + utt + self.tokenizer.sep_token
+                # input_str += '<s' + str(speaker+1) + '> ' # s1, s2, s3...
+                # input_str += utt + " "
                 if i < len(session)-1 and current_speaker == speaker:
                     PM_input.append(self.tokenizer.encode(utt, add_special_tokens=True, return_tensors='pt'))
                     # [cls_token, tokens, sep_token]

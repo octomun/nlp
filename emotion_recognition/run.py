@@ -1,7 +1,7 @@
 
-from ast import main
-from tkinter.tix import MAIN
-from unicodedata import name
+# from ast import main
+# from tkinter.tix import MAIN
+# from unicodedata import name
 
 import argparse
 from train import model_train
@@ -15,7 +15,7 @@ if __name__ == '__main__':
     parser.add_argument('-epochs', type = int, default=10)
     parser.add_argument('-lr', type = float, default=1e-6)
     parser.add_argument('-save_path', type=str, default='.')
-    parser.add_argument('-model_name', type=str, default='./model.bin')
+    parser.add_argument('-model_name', type=str, default='./model_origin.bin')
     parser.add_argument('-doing', type=str, default='train')
     args = parser.parse_args()
 

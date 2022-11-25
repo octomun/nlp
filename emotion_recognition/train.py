@@ -82,9 +82,9 @@ def model_train(args):
     test_dataset = data_loader('./MELD/data/MELD/test_sent_emo.csv')
 
     batch_size = args.batch_size
-    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4, collate_fn=train_dataset.collate_fn)
-    dev_dataloader = DataLoader(dev_dataset, batch_size=batch_size, shuffle=False, num_workers=4, collate_fn=dev_dataset.collate_fn)
-    test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=4, collate_fn=test_dataset.collate_fn)
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, collate_fn=train_dataset.collate_fn)
+    dev_dataloader = DataLoader(dev_dataset, batch_size=batch_size, shuffle=False, collate_fn=dev_dataset.collate_fn)  # num_workers=4,
+    test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False, collate_fn=test_dataset.collate_fn)
 
     from model import ERC_model
     clsNum = len(train_dataset.emoList)
@@ -106,6 +106,7 @@ def model_train(args):
     
     for epoch in tqdm(range(training_epochs)):
         erc_model.train() 
+        logger.info(f"epoch : {epoch}")
         for i_batch, data in enumerate(tqdm(train_dataloader)):
             batch_padding_token, batch_padding_attention_mask, batch_PM_input, batch_label = data
             batch_padding_token = batch_padding_token.cuda()
